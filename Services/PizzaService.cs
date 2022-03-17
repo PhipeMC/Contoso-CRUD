@@ -19,7 +19,6 @@ public class PizzaService
         return _context.Toppings
             .AsNoTracking()
             .ToList();
-
     }
 
     public IEnumerable<Sauce> SauceGetAll()
@@ -27,7 +26,6 @@ public class PizzaService
         return _context.Sauces
             .AsNoTracking()
             .ToList();
-
     }
 
     public IEnumerable<Pizza> GetAll()
@@ -35,7 +33,6 @@ public class PizzaService
         return _context.Pizzas
             .AsNoTracking()
             .ToList();
-
     }
 
 
@@ -46,7 +43,6 @@ public class PizzaService
             .Include(p => p.Sauce)
             .AsNoTracking()
             .SingleOrDefault(p => p.Id == id);
-
     }
 
     public Pizza? Create(Pizza newPizza)
@@ -61,14 +57,12 @@ public class PizzaService
         _context.Pizzas.Add(pizza);
         _context.SaveChanges();
 
-
         UpdateSauce(pizza.Id, newPizza.Sauce.Id);
 
         foreach (var item in newPizza.Toppings)
         {
             AddTopping(pizza.Id, item.Id);
         }
-
 
         return newPizza;
     }
@@ -92,7 +86,6 @@ public class PizzaService
 
         _context.Pizzas.Update(pizzaToUpdate);
         _context.SaveChanges();
-
     }
 
     public void UpdatePizza(int PizzaId, Pizza newPizza)
@@ -111,30 +104,21 @@ public class PizzaService
         pizzaToUpdate.Name = newPizza.Name;
         pizzaToUpdate.Sauce = newPizza.Sauce;
 
-
-        //_context.Toppings.Find
-        //intenté eliminar los anteriores ingredientes que tuviese la pizza a eliminar
-        //y después agregar de nuevo uno por uno, pero no jaló
-        //Hace falta actualizar los ingredientes
         var toppingsPizza = pizzaToUpdate.Toppings.ToList();
 
         foreach (var item in toppingsPizza)
         {
             pizzaToUpdate.Toppings.Remove(item);
             Console.WriteLine(item);
-
-
         }
         _context.SaveChanges();
 
         foreach (var item in newPizza.Toppings.ToList())
         {
             AddTopping(newPizza.Id, item.Id);
-
         }
 
         _context.SaveChanges();
-
     }
 
     public void UpdateSauce(int PizzaId, int SauceId)
@@ -150,7 +134,6 @@ public class PizzaService
         pizzaToUpdate.Sauce = sauceToUpdate;
 
         _context.SaveChanges();
-
     }
 
     public void DeleteById(int id)

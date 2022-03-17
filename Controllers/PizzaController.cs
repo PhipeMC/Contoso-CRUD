@@ -9,20 +9,18 @@ namespace aspnetcore_with_reactspa.Controllers;
 public class PizzaController : ControllerBase
 {
     PizzaService _service;
-    
+
     public PizzaController(PizzaService service)
     {
         _service = service;
     }
 
-    //localhost/pizza/sauce
     [HttpGet("sauce")]
     public IEnumerable<Sauce> SauceGetAll()
     {
         return _service.SauceGetAll();
     }
 
-    //localhost/pizza/topping
     [HttpGet]
     [Route("topping")]
     public IEnumerable<Topping> ToppingGetAll()
@@ -31,7 +29,7 @@ public class PizzaController : ControllerBase
     }
 
 
-     [HttpGet]
+    [HttpGet]
     public IEnumerable<Pizza> GetAllPizzaToppings()
     {
         return _service.GetAll();
@@ -42,7 +40,7 @@ public class PizzaController : ControllerBase
     {
         var pizza = _service.GetById(id);
 
-        if(pizza is not null)
+        if (pizza is not null)
         {
             return pizza;
         }
@@ -65,12 +63,10 @@ public class PizzaController : ControllerBase
     {
         var pizzaToUpdate = _service.GetById(id);
 
-        if(pizzaToUpdate is not null)
+        if (pizzaToUpdate is not null)
         {
-            Console.WriteLine("Entró aquí");
-            //Console.WriteLine(newPizza.ToString());
             _service.UpdatePizza(id, newPizza);
-            return NoContent();    
+            return NoContent();
         }
         else
         {
@@ -83,10 +79,10 @@ public class PizzaController : ControllerBase
     {
         var pizzaToUpdate = _service.GetById(id);
 
-        if(pizzaToUpdate is not null)
+        if (pizzaToUpdate is not null)
         {
             _service.AddTopping(id, toppingId);
-            return NoContent();    
+            return NoContent();
         }
         else
         {
@@ -99,10 +95,10 @@ public class PizzaController : ControllerBase
     {
         var pizzaToUpdate = _service.GetById(id);
 
-        if(pizzaToUpdate is not null)
+        if (pizzaToUpdate is not null)
         {
             _service.UpdateSauce(id, sauceId);
-            return NoContent();    
+            return NoContent();
         }
         else
         {
@@ -115,7 +111,7 @@ public class PizzaController : ControllerBase
     {
         var pizza = _service.GetById(id);
 
-        if(pizza is not null)
+        if (pizza is not null)
         {
             _service.DeleteById(id);
             return Ok();

@@ -49,7 +49,6 @@ export class PizzaCatalogo extends Component {
                     data: datos.pizzas,
                     salsas: datos.salsas, ingredientes: datos.ingredientes
                 });
-                console.log(this.state);
             }
         );
     }
@@ -62,12 +61,10 @@ export class PizzaCatalogo extends Component {
         const os = this.state.salsas.filter(salsa => salsa.id == this.state.salsa).pop();
         const ot = [];
         const ingre = this.state.ingredientes;
-        console.log(ingre);
         this.state.toppings.forEach(
             it => {
                 const ing = ingre.filter(ele => ele.id == it).pop();
                 ot.push(ing);
-                console.log(ing);
             }
         );
 
@@ -86,13 +83,13 @@ export class PizzaCatalogo extends Component {
                 },
                 body: JSON.stringify(pizza)
             };
-            console.log(options.body);
             fetch('pizza', options)
                 .then(
                     (response) => { return response.status; }
                 ).then(
                     (code) => {
                         if (code == 201) {
+                            console.log(code)
                             const pizzas = Array.from(this.state.data);
                             pizzas.push({ name: pizza.name });
                             this.componentDidMount();
@@ -113,7 +110,6 @@ export class PizzaCatalogo extends Component {
                 },
                 body: JSON.stringify(pizza)
             };
-            console.log(`pizza/${this.state.id}`);
             fetch('pizza/' + this.state.pizzaE.id + "/UpdatePizza", options)
                 .then(
                     (response) => {
@@ -142,11 +138,9 @@ export class PizzaCatalogo extends Component {
     }
 
     editar = (item) => {
-        console.log(item);
         fetch('pizza/' + item.id)
             .then(response => { return response.json() })
             .then(o => {
-                console.log(o);
                 this.setState({ id: o.id });
                 this.setState({ accion: 2, pizzaE: o, name: o.name })
             });
@@ -157,11 +151,9 @@ export class PizzaCatalogo extends Component {
     }
 
     eliminar() {
-        console.log("eliminar");
         fetch('pizza/' + this.state.pizzaE.id, { method: "delete" })
             .then(response => { return response.status })
             .then(code => {
-                console.log(code);
                 this.componentDidMount();
                 this.setState({ accion: 0 });
             })
@@ -182,9 +174,7 @@ export class PizzaCatalogo extends Component {
     handleChange = (e) => {
         if (e.target.name == 'toppings') {
             const toppi = Array.from(e.target.selectedOptions, option => option.value);
-            console.log(toppi);
             this.setState({ toppings: toppi });
-            console.log(this.state);
         } else {
             this.setState({ [e.target.name]: e.target.value });
         }
@@ -242,7 +232,7 @@ export class PizzaCatalogo extends Component {
                     toggle={this.mitoogle}
                 >
                     <ModalHeader toggle={this.mitoogle}>
-                        Modal title
+                        Contoso Pizza
                     </ModalHeader>
                     <ModalBody>
                         <Form>
